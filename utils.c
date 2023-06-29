@@ -6,11 +6,18 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 10:55:26 by mpascual          #+#    #+#             */
-/*   Updated: 2023/06/29 11:54:00 by mpascual         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:33:31 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	error(const char *str)
+{
+	ft_putstr("Error\n");
+	ft_putstr(str);
+	return(1);
+}
 
 int	ft_putchar(char c)
 {
