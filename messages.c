@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 10:59:55 by mpascual          #+#    #+#             */
-/*   Updated: 2023/06/29 17:07:15 by mpascual         ###   ########.fr       */
+/*   Updated: 2023/06/30 10:39:41 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,43 +18,23 @@
 ** Manage exit calls if all philos eat the necessary times or one of them dies
 */
 
-void	take_fork(int time, int philo)
+long long	current_time(void)
 {
-	ft_putnbr(time);
-	ft_putchar(' ');
-	ft_putnbr(philo);
-	ft_putstr(" has taken a fork\n");
+	struct timeval	t;
+
+	gettimeofday(&t, NULL);
+	return (t.tv_sec * 1000 + t.tv_usec / 1000);
 }
 
-void	eating(int time, int philo)
-// +1 argument -> times_each_philo_must_eat
+void	print_action(t_rules *rules, int n_philo, char *message)
 {
-	ft_putnbr(time);
-	ft_putchar(' ');
-	ft_putnbr(philo);
-	ft_putstr(" is eating\n");
-}
+	pthread_mutex_lock(&rules->print);
+	if (rules->anyone_dead == false)
+	{
+		printf("%lli ", current_time() - rules->start);
+		printf("%i ", n_philo); // philospher's ID
+		printf("%s", message);
+	}
+	pthread_mutex_unlock(&rules->print);
 
-void	sleeping(int time, int philo)
-{
-	ft_putnbr(time);
-	ft_putchar(' ');
-	ft_putnbr(philo);
-	ft_putstr(" is sleeping\n");
-}
-
-void	thinking(int time, int philo)
-{
-	ft_putnbr(time);
-	ft_putchar(' ');
-	ft_putnbr(philo);
-	ft_putstr(" is thinking\n");
-}
-
-void	dying(int time, int philo)
-{
-	ft_putnbr(time);
-	ft_putchar(' ');
-	ft_putnbr(philo);
-	ft_putstr(" DIED\n");
 }

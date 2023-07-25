@@ -19,7 +19,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 
 	@echo "$(GREEN)Compilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-	gcc $(CFLAGS) $(OBJS) -o $(NAME)
+	gcc $(CFLAGS) -pthread $(OBJS) -o $(NAME)
 	@echo "$(GREEN)$(NAME) created ✓${CLR_RMV}"
 
 $(OBJS): $(SRC)
@@ -27,7 +27,7 @@ $(OBJS): $(SRC)
 
 debug: compile_lib
 	@echo "$(GREEN)--DEBUG MODE--\nCompilation ${CLR_RMV}of ${YELLOW}$(NAME) ${CLR_RMV}..."
-	$(CC) $(CFLAGS) -g $(SRC) -o $(NAME) -fsanitize=address,undefined
+	gcc $(CFLAGS) -pthread -g $(SRC) -o $(NAME) -fsanitize=address,undefined
 	@echo "$(GREEN)$(NAME) created ✓${CLR_RMV}"
 
 clean:
