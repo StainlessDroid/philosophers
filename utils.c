@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 10:55:26 by mpascual          #+#    #+#             */
-/*   Updated: 2023/07/26 11:55:07 by mpascual         ###   ########.fr       */
+/*   Updated: 2023/07/26 14:12:09 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ void	print_action(t_args *args, int n_philo, char *message)
 	with the given message
 */
 {
-	if (args->is_dead == false)
+	pthread_mutex_lock(&(args->print_m));
+	if (args->is_dead == 0)
 	{
-		printf("%lli ", current_time() - args->start_time);
+		printf("[%09lld] ", current_time() - args->start_time);
 		printf("%i ", n_philo);
 		printf("%s", message);
 	}
+	pthread_mutex_unlock(&(args->print_m));
 }
 
 t_args	get_args(int argc, char **argv)
@@ -56,7 +58,7 @@ t_args	get_args(int argc, char **argv)
 	args.ttdie = ft_atoi(argv[2]);
 	args.tteat = ft_atoi(argv[3]);
 	args.ttsleep = ft_atoi(argv[4]);
-	args.is_dead = false;
+	args.is_dead = 0;
 	if (argc == 6)
 		args.max_meals = ft_atoi(argv[5]);
 	else

@@ -6,15 +6,15 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:20:37 by mpascual          #+#    #+#             */
-/*   Updated: 2023/07/26 11:55:39 by mpascual         ###   ########.fr       */
+/*   Updated: 2023/07/26 14:13:38 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	is_dead(t_philo *phil)
+int	is_dead(t_philo *phil)
 {
-	bool	is_alive;
+	int	is_alive;
 
 	pthread_mutex_lock(&(phil->args->dead_m));
 	is_alive = phil->args->is_dead;
@@ -25,17 +25,17 @@ bool	is_dead(t_philo *phil)
 int	stop_threads(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->args->dead_m));
-	philo->args->is_dead = true;
+	philo->args->is_dead = 1;
 	pthread_mutex_unlock(&(philo->args->dead_m));
 	return (1);
 }
 
 int	check_philo_death(t_philo *philo, long cur_time)
 {
-	bool	dead;
-	int		last_meal;
+	int	dead;
+	int	last_meal;
 
-	dead = false;
+	dead = 0;
 	pthread_mutex_lock(&(philo->last_meal_m));
 	last_meal = cur_time - philo->last_eaten;
 	pthread_mutex_unlock(&(philo->last_meal_m));
@@ -43,11 +43,11 @@ int	check_philo_death(t_philo *philo, long cur_time)
 	{
 		pthread_mutex_lock(&(philo->args->print_m));
 		pthread_mutex_lock(&(philo->args->dead_m));
-		philo->args->is_dead = true;
+		philo->args->is_dead = 1;
 		pthread_mutex_unlock(&(philo->args->dead_m));
-		printf("%09ld %d died\n", cur_time, philo->position);
+		printf("[%09ld] %d died\n", cur_time, philo->position);
 		pthread_mutex_unlock(&(philo->args->print_m));
-		dead = true;
+		dead = 1;
 	}
 	return (dead);
 }

@@ -6,23 +6,21 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:03:37 by mpascual          #+#    #+#             */
-/*   Updated: 2023/07/26 11:59:03 by mpascual         ###   ########.fr       */
+/*   Updated: 2023/07/26 14:13:22 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
-
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdio.h>
 # include <pthread.h>
 # include <sys/time.h>
-# include <stdbool.h>
 
 typedef struct s_fork
 {
-	bool			in_use;
+	int				in_use;
 	pthread_mutex_t	lock;
 }		t_fork;
 
@@ -33,7 +31,7 @@ typedef struct s_args
 	int				tteat;
 	int				ttsleep;
 	int				max_meals;
-	bool			is_dead;
+	int				is_dead;
 	long int		start_time;
 	pthread_mutex_t	print_m;
 	pthread_mutex_t	dead_m;
@@ -49,8 +47,8 @@ typedef struct s_philo
 	t_fork			*left_fork;
 	int				meal_count;
 	long long		last_eaten;
-	bool			has_r_fork;
-	bool			has_l_fork;
+	int				has_r_fork;
+	int				has_l_fork;
 	pthread_mutex_t	last_meal_m;
 	t_args			*args;
 }		t_philo;
@@ -73,7 +71,7 @@ void		release_fork(char fork_name, t_philo *philo);
 void		take_fork(char fork_name, t_philo *philo);
 void		release_both_forks(t_philo *philo);
 /* from stop.c */
-bool		is_dead(t_philo *phil);
+int			is_dead(t_philo *phil);
 int			stop_threads(t_philo *philo);
 void		*death_check(void *arg);
 #endif

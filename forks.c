@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 00:47:59 by mpascual          #+#    #+#             */
-/*   Updated: 2023/07/26 11:37:46 by mpascual         ###   ########.fr       */
+/*   Updated: 2023/07/26 13:39:18 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	take_fork(char fork_name, t_philo *philo)
 {
-	bool	*taken;
+	int		*taken;
 	t_fork	*fork;
 
 	if (!is_dead(philo))
@@ -27,12 +27,12 @@ void	take_fork(char fork_name, t_philo *philo)
 			fork = philo->left_fork;
 		}
 		pthread_mutex_lock(&(fork->lock));
-		if (!(*taken) && !fork->in_use)
+		if (*taken == 0 && fork->in_use == 0)
 		{
-			*taken = true;
-			fork->in_use = true;
+			*taken = 1;
+			fork->in_use = 1;
 			pthread_mutex_unlock(&(fork->lock));
-			print_action(philo->args, philo->position, "has taken a fork");
+			print_action(philo->args, philo->position, "has taken a fork\n");
 		}
 		else
 			pthread_mutex_unlock(&(fork->lock));
@@ -41,8 +41,8 @@ void	take_fork(char fork_name, t_philo *philo)
 
 void	release_fork(char fork_name, t_philo *philo)
 {
-	bool		*taken;
-	t_fork		*fork;
+	int		*taken;
+	t_fork	*fork;
 
 	taken = &(philo->has_r_fork);
 	fork = philo->right_fork;
@@ -61,6 +61,6 @@ void	release_both_forks(t_philo *philo)
 {
 	release_fork('r', philo);
 	release_fork('l', philo);
-	print_action(philo->args, philo->position, "is sleeping");
+	print_action(philo->args, philo->position, "is sleeping\n");
 	custom_usleep(philo->args->ttsleep);
 }
