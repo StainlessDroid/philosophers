@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 10:20:37 by mpascual          #+#    #+#             */
-/*   Updated: 2023/07/26 11:31:50 by mpascual         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:55:39 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	*death_check(void *arg)
 */
 {
 	t_args	*args;
-	t_philo		**philos;
-	long		cur_time;
-	int			i;
+	t_philo	**philos;
+	long	cur_time;
+	int		i;
 
 	philos = (t_philo **)arg;
 	args = philos[0]->args;

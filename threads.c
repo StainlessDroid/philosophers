@@ -6,16 +6,16 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 09:38:01 by mpascual          #+#    #+#             */
-/*   Updated: 2023/07/26 11:32:37 by mpascual         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:53:49 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int		join_threads(t_philo **philos, t_args *args)
+int	join_threads(t_philo **philos, t_args *args)
 {
-	int i;
-	int ret;
+	int	i;
+	int	ret;
 
 	i = 0;
 	ret = 0;
@@ -28,7 +28,7 @@ int		join_threads(t_philo **philos, t_args *args)
 	return (ret);
 }
 
-int		start_threads(t_philo **philos, t_args *args)
+int	start_threads(t_philo **philos, t_args *args)
 /*
 	creates philosopher's threads and death check thread
 */
@@ -72,8 +72,7 @@ void	create_philo(t_philo *philo, t_args *args, t_fork **forks, int i)
 	pthread_mutex_init(&(philo->left_fork->lock), NULL);
 }
 
-
-int		create_all_philos(t_philo **philos, t_args *args, t_fork **forks)
+int	create_all_philos(t_philo **philos, t_args *args, t_fork **forks)
 /*
 	Aloja memoria para todos los filosofos y tenedores
 	y inicializa los filosofos

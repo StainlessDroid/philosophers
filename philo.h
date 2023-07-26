@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:03:37 by mpascual          #+#    #+#             */
-/*   Updated: 2023/07/26 11:33:56 by mpascual         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:59:03 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <sys/time.h>
-
-# define bool	_Bool
-# define true	1
-# define false	0
+# include <stdbool.h>
 
 typedef struct s_fork
 {
@@ -31,7 +28,7 @@ typedef struct s_fork
 
 typedef struct s_args
 {
-	int 			n_philos;
+	int				n_philos;
 	int				ttdie;
 	int				tteat;
 	int				ttsleep;
@@ -46,7 +43,7 @@ typedef struct s_args
 
 typedef struct s_philo
 {
-	pthread_t 		thread_id;
+	pthread_t		thread_id;
 	int				position;
 	t_fork			*right_fork;
 	t_fork			*left_fork;
@@ -59,24 +56,24 @@ typedef struct s_philo
 }		t_philo;
 
 /* from philo.c */
-void	*philo_routine(void *arg);
-void	free_mem(t_philo *philos, t_fork *forks);
+void		*philo_routine(void *arg);
+void		free_mem(t_philo *philos, t_fork *forks);
 /* from threads.c */
-int		start_threads(t_philo **philos, t_args *args);
-int		join_threads(t_philo **philos, t_args *args);
-int		create_all_philos(t_philo **philos, t_args *args, t_fork **forks);
+int			start_threads(t_philo **philos, t_args *args);
+int			join_threads(t_philo **philos, t_args *args);
+int			create_all_philos(t_philo **philos, t_args *args, t_fork **forks);
 /* from utils.c */
-void	print_action(t_args *args, int n_philo, char *message);
+void		print_action(t_args *args, int n_philo, char *message);
 long long	current_time(void);
-void	custom_usleep(long int time);
-t_args	get_args(int argc, char **argv);
-int		ft_atoi(const char *str);
+void		custom_usleep(long int time);
+t_args		get_args(int argc, char **argv);
+int			ft_atoi(const char *str);
 /* from forks.c */
-void	release_fork(char fork_name, t_philo *philo);
-void	take_fork(char fork_name, t_philo *philo);
-void	release_both_forks(t_philo *philo);
+void		release_fork(char fork_name, t_philo *philo);
+void		take_fork(char fork_name, t_philo *philo);
+void		release_both_forks(t_philo *philo);
 /* from stop.c */
-bool	is_dead(t_philo *phil);
-int		stop_threads(t_philo *philo);
-void	*death_check(void *arg);
+bool		is_dead(t_philo *phil);
+int			stop_threads(t_philo *philo);
+void		*death_check(void *arg);
 #endif

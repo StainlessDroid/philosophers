@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 10:55:26 by mpascual          #+#    #+#             */
-/*   Updated: 2023/07/26 11:33:46 by mpascual         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:55:07 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	print_action(t_args *args, int n_philo, char *message)
 		printf("%i ", n_philo);
 		printf("%s", message);
 	}
-
 }
 
 t_args	get_args(int argc, char **argv)
@@ -51,7 +50,7 @@ t_args	get_args(int argc, char **argv)
 	Basic parsing is done in the caller function (main)
 */
 {
-	t_args args;
+	t_args	args;
 
 	args.n_philos = ft_atoi(argv[1]);
 	args.ttdie = ft_atoi(argv[2]);
@@ -62,7 +61,7 @@ t_args	get_args(int argc, char **argv)
 		args.max_meals = ft_atoi(argv[5]);
 	else
 		args.max_meals = 0;
-	return (args);	
+	return (args);
 }
 
 int	ft_atoi(const char *str)

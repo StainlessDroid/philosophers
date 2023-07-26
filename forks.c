@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 00:47:59 by mpascual          #+#    #+#             */
-/*   Updated: 2023/07/26 11:19:55 by mpascual         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:37:46 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	take_fork(char fork_name, t_philo *philo)
 void	release_fork(char fork_name, t_philo *philo)
 {
 	bool		*taken;
-	t_fork	*fork;
+	t_fork		*fork;
 
 	taken = &(philo->has_r_fork);
 	fork = philo->right_fork;
