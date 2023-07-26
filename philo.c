@@ -6,70 +6,51 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:05:02 by mpascual          #+#    #+#             */
-/*   Updated: 2023/07/25 17:04:39 by mpascual         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:15:44 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_rules(t_rules *rules)
+void	free_mem(t_philo *philos, t_fork *forks)
 {
-	if (rules->n_philos < 0)
-		return (1);
-	else if (rules->ttdie < 0)
-		return (1);
-	else if (rules->tteat < 0)
-		return (1);
-	else if (rules->ttsleep < 0)
-		return (1);
-	else if (rules->required_meals < 0)
-		return (1);
-	else
-		return (0);
+	free(philos);
+	free(forks);
 }
 
-t_rules	get_rules(int argc, char **argv)
+
+void	*philo_routine(void *arg)
 {
-	t_rules rules;
+	t_philo		*philo;
 
-	rules.n_philos = ft_atoi(argv[1]);
-	rules.ttdie = ft_atoi(argv[2]);
-	rules.tteat = ft_atoi(argv[3]);
-	rules.ttsleep = ft_atoi(argv[4]);
-	rules.anyone_dead = false;
-	rules.all_eated = false;
-	if (argc == 6)
-		rules.required_meals = ft_atoi(argv[5]);
-	else
-		rules.required_meals = 0;
-	return (rules);	
-}
-
-int	create_philos(t_rules *rules)
-{
-	int i;
-
-	i = 0;
-	while (i < rules->n_philos)
+	philo = (t_philo *)arg;
+	if (philo->position % 2 != 0)
+		custom_usleep(philo->args->tteat);
+	while (!is_dead(philo))
 	{
-		rules->philos[i].id = i;
-		rules->philos[i].right_fork = i;
-		rules->philos[i].left_fork = i % rules->n_philos;
-		i++;
+		if (philo->meal_count >= philo->args->max_meals
+			&& philo->args->max_meals > 0)
+			break ;
+		take_fork('l', philo);
+		if (philo->has_l_fork)
+			take_fork('r', philo);
+		if (philo->has_r_fork && philo->has_l_fork)
+		{
+			print_action(philo->args, philo->position, "is eating\n");
+			custom_usleep(philo->args->tteat);
+			philo->meal_count++;
+			// mutex to update last_eaten time (since more than one thread can call the function at the same time)
+			pthread_mutex_lock(&(philo->last_meal_m));
+			philo->last_eaten = current_time() - philo->args->start_time;
+			pthread_mutex_unlock(&(philo->last_meal_m));
+			release_both_forks(philo);
+		}
 	}
-	return (0);
-}
-
-void	*thread_routine(void *data)
-{
-	printf("inside thread[]\n");
-	if (data != NULL)
-		printf("function data is not NULL\n");
 	return (NULL);
 }
 
 
-int main(int argc, char **argv)
+int		main(int argc, char **argv)
 /* EXPECTED ARGUMENTS:
 *	number_of_philosophers
 *	time_to_die
@@ -78,15 +59,26 @@ int main(int argc, char **argv)
 *	[number_of_times_each_philosopher_must_eat]
 */
 {
-	t_rules rules;
+	t_args args;
+	t_philo	*philos;
+	t_fork	*forks;
 
 	if (argc > 6 || argc < 5)
 		return(printf("Error\nWrong number of arguments\n"));
-	rules = get_rules(argc, argv);
-	if (rules.n_philos < 0 || rules.ttdie < 0 || rules.tteat < 0
-		|| rules.ttsleep < 0 || rules.required_meals < 0)
-		return(printf("Error\nFucked up arguments\n"));
-	if (rules.n_philos > 250)
-		return(printf("Too many philosphers, let them starve!\n"));
+	args = get_args(argc, argv);
+	if (args.n_philos < 0 || args.ttdie < 0 || args.tteat < 0
+		|| args.ttsleep < 0 || args.max_meals < 0)
+		return(printf("Error\nBad arguments\n"));
+	if (create_all_philos(&philos, &args, &forks) != 0)
+	{
+		stop_threads(&philos[0]);
+		return(printf("Error\nCould not create philosophers\n"));
+	}
+	if (join_threads(&philos, &args) != 0)
+	{
+		free_mem(philos, forks);
+		return (printf("Error\nCould not join threads\n"));
+	}
+	free_mem(philos, forks);
 	return (0);
 }

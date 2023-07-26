@@ -8,7 +8,7 @@ CYAN 		:= \033[1;36m
 
 # Global Config
 NAME		= philo
-SRC 		= philo.c utils.c messages.c
+SRC 		= philo.c utils.c forks.c threads.c stop.c
 OS			= $(shell uname)
 
 OBJS			= $(SRC:.c=.o)
