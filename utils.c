@@ -38,11 +38,8 @@ void	print_action(t_args *args, int n_philo, char *message)
 {
 	pthread_mutex_lock(&(args->print_m));
 	if (args->is_dead == 0)
-	{
-		printf("[%09lld] ", current_time() - args->start_time);
-		printf("%i ", n_philo);
-		printf("%s", message);
-	}
+		printf("[%09lld] %i %s", current_time() - args->start_time,
+			n_philo, message);
 	pthread_mutex_unlock(&(args->print_m));
 }
 

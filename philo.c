@@ -36,13 +36,12 @@ void	*philo_routine(void *arg)
 			&& philo->args->max_meals > 0)
 			break ;
 		take_fork('l', philo);
-		if (philo->has_l_fork)
-			take_fork('r', philo);
+		take_fork('r', philo);
 		if (philo->has_r_fork && philo->has_l_fork)
 		{
 			print_action(philo->args, philo->position, "is eating\n");
-			custom_usleep(philo->args->tteat);
 			philo->meal_count++;
+			custom_usleep(philo->args->tteat);
 			pthread_mutex_lock(&(philo->last_meal_m));
 			philo->last_eaten = current_time() - philo->args->start_time;
 			pthread_mutex_unlock(&(philo->last_meal_m));

@@ -77,5 +77,4 @@ void	*death_check(void *arg)
 		}
 		custom_usleep(1);
 	}
-	return (NULL);
 }
