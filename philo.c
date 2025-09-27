@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mapascua <mapascua@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 13:05:02 by mpascual          #+#    #+#             */
-/*   Updated: 2023/07/26 13:20:09 by mpascual         ###   ########.fr       */
+/*   Created: 2025/09/19 13:05:02 by mapascua          #+#    #+#             */
+/*   Updated: 2025/09/27 10:14:49 by mapascua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	*philo_routine(void *arg)
 }
 
 int	main(int argc, char **argv)
-/* EXPECTED ARGUMENTS:
+/*
+*	EXPECTED ARGUMENTS:
 *	number_of_philosophers
 *	time_to_die
 *	time_to_eat
@@ -73,7 +74,7 @@ int	main(int argc, char **argv)
 	if (create_all_philos(&philos, &args, &forks) != 0)
 	{
 		stop_threads(&philos[0]);
-		return (printf("Error\nCould not create philosophers\n"));
+		return (printf("Error\nCould not create threads\n"));
 	}
 	if (join_threads(&philos, &args) != 0)
 	{

@@ -7,6 +7,7 @@ BLUE		:= \033[1;34m
 CYAN 		:= \033[1;36m
 
 # Global Config
+CC			= cc
 NAME		= philo
 SRC 		= philo.c utils.c forks.c threads.c stop.c
 OS			= $(shell uname)

@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mapascua <mapascua@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/29 10:55:26 by mpascual          #+#    #+#             */
-/*   Updated: 2023/07/26 14:12:09 by mpascual         ###   ########.fr       */
+/*   Created: 2025/09/19 10:55:26 by mapascua          #+#    #+#             */
+/*   Updated: 2025/09/26 14:12:09 by mapascua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 void	custom_usleep(long int time)
+/*
+	Doing a usleep() of a big value causes problems
+	I only do calls of 100μs max that add to the requested value
+*/
 {
 	long int	start_time;
 
@@ -66,7 +70,7 @@ t_args	get_args(int argc, char **argv)
 int	ft_atoi(const char *str)
 /*
 	Modified to return -1 if the number is not valid
-	This is to ease paring in the main function
+	This is to ease parsing in the main function
 */
 {
 	long int	n;
