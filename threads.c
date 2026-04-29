@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 09:38:01 by mpascual          #+#    #+#             */
-/*   Updated: 2023/07/26 14:09:29 by mpascual         ###   ########.fr       */
+/*   Updated: 2026/04/29 19:12:05 by mapascua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	create_all_philos(t_philo **philos, t_args *args, t_fork **forks)
 	}
 	args->start_time = current_time();
 	pthread_mutex_init(&(args->print_m), NULL);
+	pthread_mutex_init(&(args->dead_m), NULL);
 	while (i < args->n_philos)
 	{
 		create_philo(&((*philos)[i]), args, forks, i);
