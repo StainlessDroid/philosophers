@@ -6,7 +6,7 @@
 /*   By: mapascua <mapascua@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 13:05:02 by mapascua          #+#    #+#             */
-/*   Updated: 2025/09/27 10:14:49 by mapascua         ###   ########.fr       */
+/*   Updated: 2026/04/29 19:25:43 by mapascua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	*philo_routine(void *arg)
 		{
 			print_action(philo->args, philo->position, "is eating\n");
 			philo->meal_count++;
-			custom_usleep(philo->args->tteat);
 			pthread_mutex_lock(&(philo->last_meal_m));
 			philo->last_eaten = current_time() - philo->args->start_time;
 			pthread_mutex_unlock(&(philo->last_meal_m));
+			custom_usleep(philo->args->tteat);
 			release_both_forks(philo);
 		}
 	}
