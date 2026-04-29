@@ -6,7 +6,7 @@
 /*   By: mapascua <mapascua@student.42malaga.com>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/19 13:05:02 by mapascua          #+#    #+#             */
-/*   Updated: 2026/04/21 19:52:02 by mapascua         ###   ########.fr       */
+/*   Updated: 2025/09/27 10:14:49 by mapascua         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,9 @@ void	*philo_routine(void *arg)
 			&& philo->args->max_meals > 0)
 			break ;
 		take_fork('l', philo);
-		if (is_dead(philo))
-		{
-			release_fork('l', philo); // release if we got it
-			return (NULL);
-		}
 		take_fork('r', philo);
-		if (is_dead(philo))
+		if (philo->has_r_fork && philo->has_l_fork)
 		{
-			release_fork('r', philo);
-			release_fork('l', philo);
-			return (NULL);
-		}
 			print_action(philo->args, philo->position, "is eating\n");
 			philo->meal_count++;
 			custom_usleep(philo->args->tteat);
@@ -55,6 +46,7 @@ void	*philo_routine(void *arg)
 			philo->last_eaten = current_time() - philo->args->start_time;
 			pthread_mutex_unlock(&(philo->last_meal_m));
 			release_both_forks(philo);
+		}
 	}
 	return (NULL);
 }

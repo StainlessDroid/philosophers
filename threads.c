@@ -6,7 +6,7 @@
 /*   By: mpascual <mpascual@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 09:38:01 by mpascual          #+#    #+#             */
-/*   Updated: 2026/04/21 19:47:13 by mapascua         ###   ########.fr       */
+/*   Updated: 2023/07/26 14:09:29 by mpascual         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,11 @@ void	create_philo(t_philo *philo, t_args *args, t_fork **forks, int i)
 {
 	philo->args = args;
 	philo->position = i;
-	philo->last_eaten = 0; // This may cause some problems
+	philo->last_eaten = 0;
 	philo->meal_count = 0;
 	philo->right_fork = &((*forks)[i]);
+	philo->has_r_fork = 0;
+	philo->has_l_fork = 0;
 	if (i == args->n_philos - 1)
 		philo->left_fork = &((*forks)[0]);
 	else
@@ -88,8 +90,8 @@ int	create_all_philos(t_philo **philos, t_args *args, t_fork **forks)
 		free(*philos);
 		return (1);
 	}
+	args->start_time = current_time();
 	pthread_mutex_init(&(args->print_m), NULL);
-	pthread_mutex_init(&(args->dead_m), NULL);
 	while (i < args->n_philos)
 	{
 		create_philo(&((*philos)[i]), args, forks, i);
